@@ -1,0 +1,89 @@
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(document).ready(function() {
+		loadLayout();
+	});
+	function loadLayout() {
+		var username =$('#usernamelogin').text();
+		getRequest({
+			url : "/user/userinfo/?username="+username,
+			success : function(data) {
+				loadNameUser(data);
+			},
+			error : function(e) {
+				new Toast('error', e['message']);
+			}
+		});
+	}
+	function loadNameUser(data) {
+		
+		 $('#unit_id_info').val(data['unit_id']);
+		var unit_id = $('#unit_id_info').val();  
+		loadInfoApi(data['unit_id']);
+	}
+	function loadInfoApi(unit_id) {
+		var id=unit_id;
+		getRequest({
+			url : "/units/" + id,
+			success : function(data) {
+				loadApiDisplay(data);
+				
+			},
+			error : function(e) {
+				new Toast('error', e['message']);
+			}
+		});
+	}
+	function loadApiDisplay(data)
+	{
+		var a = data['apis'].split(",");
+		var html='';
+		var description='';
+		
+		for (var i = 1; i < a.length; i++) {
+			var description=loadDescription(a[i]);
+			html +='<li id="mn_'+a[i]+'_unit"><a href="/'+a[i]+'logreq" id="kn_'+a[i]+'"><i class="fa fa-folder" style="font-size: 14px"></i>'+description+'</a></li>';
+		}
+		$('#menu_unit').html(html);
+	}
+	
+	function loadDescription(item){
+		 if(item=="tuphap"){
+				description="Kết nối Tư pháp";
+			}
+			else{
+				if(item=="vnpost"){
+					description="Kết nối Vnpost";
+				}
+				else{
+					if(item=="bhxh"){
+						description="Kết nối BHXH";
+					}
+					else{
+						if(item=="khdt"){
+							description="Kết nối KHDT";
+						}
+						else{
+							if(item=="datashare"){
+								description="Kết nối dữ liệu dùng chung";
+							}
+							else{
+
+								if(item=="dvc"){
+									description="Cổng dịch vụ công quốc gia";
+								}
+								else{
+									if(item="bcqg"){
+										description="Kết nối báo cáo quốc gia"
+									} 
+								}
+							}
+						}
+					}
+				}
+			}
+		 return description;
+	}
+
+	/*]]>*/
+</script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html xmlns:layout="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/dist/bootstrap-table.css" />
+    <script src="/dist/bootstrap-table.js"></script>
+    <title>Diana’s jewelry</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" media="all" href="/css/style.css">
+
+</head>
+<body>
+<header id="header">
+    <div class="container">
+        <a href="/" id="logo" title="Quoc Hung’s jewelry">Quoc Hung’s jewelry</a>
+        <div class="right-links">
+            <ul>
+                <li th:unless="${#request.userPrincipal != null}"><a href="/login">Đăng nhập</a></li>
+                <li th:if="${#request.userPrincipal != null}"><a href="/logout"><span th:utext="${#request.getUserPrincipal().getName()}"></span></a></li>
+                <li th:if="${#request.userPrincipal != null}"><a href="/logout"><span></span>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- / container -->
+</header>
+<!-- / header -->
+
+<nav id="menu">
+    <div class="container">
+        <div class="trigger"></div>
+        <ul>
+            <li><a href="/products">Bông Tai</a></li>
+            <li><a href="/products">Dây chuyền</a></li>
+            <li><a href="/products">Lắc chân</a></li>
+            <li><a href="/products">Lắc tay</a></li>
+            <li><a href="/products">Nhẫn</a></li>
+            <li><a href="/products">Vòng cổ</a></li>
+            <li><a href="/products">Vòng tay</a></li>
+        </ul>
+    </div>
+    <!-- / container -->
+</nav>
+<!-- / navigation -->
+<section class="content">
+    <div layout:fragment="content"></div>
+</section>
+<footer id="footer">
+    <div class="container">
+        <div class="cols">
+            <div class="col media">
+            </div>
+            <div class="col media">
+                <h3>Mạng xã hội</h3>
+                <ul class="social">
+                    <li><a href="#"><span class="ico ico-fb"></span>Facebook</a></li>
+                    <li><a href="#"><span class="ico ico-tw"></span>Twitter</a></li>
+                    <li><a href="#"><span class="ico ico-gp"></span>Google+</a></li>
+                </ul>
+            </div>
+            <div class="col contact">
+                <h3>Liên hệ</h3>
+                <p>Cửa hàng vàng bạc Quốc Hưng.<br>cụm 8 Thị Trấn Phúc Thọ<br>Hà Nội</p>
+                <p><span class="ico ico-em"></span><a href="#">vangbacquochung@gmail.com</a></p>
+                <p><span class="ico ico-ph"></span>0979006509</p>
+            </div>
+            <div class="col newsletter">
+                <h3>Nhận thông tin mới nhất</h3>
+                <p>Nhận các thông tin cập nhật mới về sản phẩm, cửa hàng một cách nhanh nhất</p>
+                <form action="#">
+                    <input type="text" placeholder="Địa chỉ email của bạn...">
+                    <button type="submit"></button>
+                </form>
+            </div>
+        </div>
+        <p class="copy">Copyright 2020 Jewelry</p>
+    </div>
+    <!-- / container -->
+</footer>
+<!-- / footer -->
+
+
+<script>window.jQuery || document.write("<script src='/js/jquery-1.11.1.min.js'>\x3C/script>")</script>
+<script src="/js/plugins.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

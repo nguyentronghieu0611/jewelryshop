@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Đăng Nhập</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/static/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+
+<script src="js/main1.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<link rel="stylesheet" href="/css/login.css" />
+</head>
+<body>
+	<div class="login-page">
+		<div class="form" style="margin-top: 10%; padding-top: 50px;">
+			<form class="register-form">
+				<input type="text" placeholder="Tên đăng nhập" /> <input
+					type="password" placeholder="Mật khẩu" /> <input type="text"
+					placeholder="Địa chỉ email" />
+				<button>create</button>
+				<p class="message">
+					Bạn đã có tài khoản? <a href="#">Đăng nhập</a>
+				</p>
+			</form>
+			<form class="login-form" th:action="@{/login}"
+				method='POST'>
+				<div style="padding-bottom: 30px; color: #4caf50;">
+					<h3>HỆ THỐNG QUẢN TRỊ CỬA HÀNG VÀNG BẠC QUỐC HƯNG</h3>
+				</div>
+				<h9 th:text="${message}" style="color: red;text-align: center"></h9>
+				<input type="text" id="txtUserName" name="username"
+					placeholder="Tên đăng nhập" /> <input type="password"
+					id="txtPassword" name="password" placeholder="Tật khẩu" />
+				<button>Đăng nhập</button>
+				<p class="message">
+					Bạn chưa có tài khoản? <a href="#">Liên hệ Admin để được cung
+						cấp.</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

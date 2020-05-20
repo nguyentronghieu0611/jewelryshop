@@ -1,0 +1,21 @@
+<script th:inline="javascript">
+/*<![CDATA[*/
+	$(document).ready(function() {
+	    loadUserInfo();
+    });
+
+    function loadUserInfo() {
+        getRequest({
+            url : "/userinfo",
+            success : function(data) {
+                $('#header_username_1').html(data);
+                $('#header_username_2').html(data);
+            },
+            error : function(e) {
+                new Toast('error', e['message']);
+            }
+        });
+    }
+
+/*]]>*/
+</script>

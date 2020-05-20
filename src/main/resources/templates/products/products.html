@@ -1,0 +1,144 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout}">
+<head>
+	<title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div id="breadcrumbs">
+		<div class="container">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li>Product results</li>
+			</ul>
+		</div>
+		<!-- / container -->
+	</div>
+	<!-- / body -->
+
+	<div id="body">
+		<div class="container">
+			<div class="pagination">
+				<ul>
+					<li><a href="#"><span class="ico-prev"></span></a></li>
+					<li><a href="#">1</a></li>
+					<li class="active"><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#"><span class="ico-next"></span></a></li>
+				</ul>
+			</div>
+			<div class="products-wrap">
+				<aside id="sidebar">
+					<div class="widget">
+						<h3>Products per page:</h3>
+						<fieldset>
+							<input checked type="checkbox">
+							<label>8</label>
+							<input type="checkbox">
+							<label>16</label>
+							<input type="checkbox">
+							<label>32</label>
+						</fieldset>
+					</div>
+					<div class="widget">
+						<h3>Sort by:</h3>
+						<fieldset>
+							<input checked type="checkbox">
+							<label>Popularity</label>
+							<input type="checkbox">
+							<label>Date</label>
+							<input type="checkbox">
+							<label>Price</label>
+						</fieldset>
+					</div>
+					<div class="widget">
+						<h3>Condition:</h3>
+						<fieldset>
+							<input checked type="checkbox">
+							<label>New</label>
+							<input type="checkbox">
+							<label>Used</label>
+						</fieldset>
+					</div>
+					<div class="widget">
+						<h3>Price range:</h3>
+						<fieldset>
+							<div id="price-range"></div>
+						</fieldset>
+					</div>
+				</aside>
+				<div id="content">
+					<section class="products">
+						<article>
+							<a href="/product"><img src="images/11.jpg" alt=""></a>
+							<h3><a href="/product">Lorem ipsum dolor</a></h3>
+							<h4><a href="/product">$990.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/12.jpg" alt=""></a>
+							<h3><a href="/product">cupidatat non proident</a></h3>
+							<h4><a href="/product">$1 200.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/13.jpg" alt=""></a>
+							<h3><a href="/product">Duis aute irure</a></h3>
+							<h4><a href="/product">$2 650.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/14.jpg" alt=""></a>
+							<h3><a href="/product">magna aliqua</a></h3>
+							<h4><a href="/product">$3 500.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/15.jpg" alt=""></a>
+							<h3><a href="/product">Lorem ipsum dolor</a></h3>
+							<h4><a href="/product">$1 500.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/1.jpg" alt=""></a>
+							<h3><a href="/product">cupidatat non proident</a></h3>
+							<h4><a href="/product">$3 200.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/16.jpg" alt=""></a>
+							<h3><a href="/product">Duis aute irure</a></h3>
+							<h4><a href="/product">$2 650.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+						<article>
+							<a href="/product"><img src="images/17.jpg" alt=""></a>
+							<h3><a href="/product">magna aliqua</a></h3>
+							<h4><a href="/product">$3 500.00</a></h4>
+							<a href="/product" class="btn-add">Xem chi tiết</a>
+						</article>
+					</section>
+				</div>
+				<!-- / content -->
+			</div>
+			<div class="pagination">
+				<ul>
+					<li><a href="#"><span class="ico-prev"></span></a></li>
+					<li><a href="#">1</a></li>
+					<li class="active"><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#"><span class="ico-next"></span></a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- / container -->
+	</div>
+</div>
+</body>
+</html>

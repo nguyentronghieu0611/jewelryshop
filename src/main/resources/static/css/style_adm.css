@@ -1,0 +1,234 @@
+body {
+    font-size:13px;
+    color: #333;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+.form-data {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.data-invalid {
+    color:  #a94442;
+}
+
+.table-bt {
+    margin: 10px 0px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    /*position: relative;*/
+}
+.table-bt .dt-toolbar {
+    display: none;
+}
+.table-bt table.dataTable {
+    margin-top: 0px !important;
+}
+.table-bt table.dataTable thead .sorting_asc,
+.table-bt table.dataTable thead .sorting_desc {
+    background: #3c8dbc;
+}
+.table-bt .table {
+    background: white;
+}
+.table-bt .table thead tr,
+.table-bt .table.dataTable thead .sorting_asc {
+    background: #3c8dbc;
+    color: white;
+    text-align: center;
+}
+.table-bt thead th {
+    background: #3c8dbc;
+    color: white;
+    text-align: center;
+}
+.table-bt.table-vb tr {
+    position: relative;
+    cursor: pointer;
+}
+.table-bt.table-vb table {
+    border-collapse: unset;
+}
+
+.btn-delete {
+    color: #dd4b39;
+}
+
+.btn-delete:hover {
+    color: #d73925;
+}
+
+.btn-copy-clipboard {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+
+.highlight {
+    background-color: #ffffcc !important;
+}
+
+.highlight2 {
+    background-color: #f7f1d5 !important;
+}
+
+.fa-action {
+    font-size: 1.5em;
+    margin-left: 5px;
+    mrgin-right: 5px;
+}
+
+.treeview-menu-visible {
+    display: block !important;
+}
+.skin-blue .main-header .navbar
+{
+    background-color:#2188d1;
+}
+.skin-blue .main-header .logo
+{
+    background-color:#1a7ace;
+
+}
+
+.skin-blue .wrapper,  .skin-blue .left-side,.skin-blue .sidebar-menu>li>.treeview-menu
+{
+    background-color:#fff;
+
+}
+.skin-blue .main-sidebar
+{
+    border:1px solid #d6c7c7;
+    background-color:#f2f2f2;
+}
+.skin-blue .main-sidebar a
+{
+    color: #474b4f;
+}
+
+.skin-blue .sidebar a,.skin-blue .treeview-menu>li>a
+{
+    color:#474b4f;
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a
+{
+    color:#2b7dbc;
+    /* font-weight:bold; */
+    background-color:#fff;
+}
+.skin-blue .sidebar-menu>li>a
+{
+    border-bottom:solid 1px #e5e5e5;
+}
+.table-bt thead th
+{
+    background-color:#2188d1;
+}
+.treeview .treeview-menu>li:hover>a
+{
+    color:#2b7dbc;
+    background-color:#f2f2f2;
+}
+
+.treeview .treeview-menu>li>a
+{
+    border-bottom:dotted 1px #e5e5e5;
+    border-left:dotted 1px #e5e5e5;
+}
+.body-display {
+    height: 150px;
+    overflow: auto;
+}
+.before-body-display
+{
+    word-break: break-all;
+}
+#table_data tr td {
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+.modal-header
+{
+    color: #fff; background-color: #337ab7; border-color: #337ab7;
+}
+/* css_unit */
+.sidebar-menu
+{
+    color:black;
+}
+
+.button_status
+{
+    width:70%;
+    /* 	padding:1px; */
+    /* border-radius:5px; */
+    margin:auto;
+    text-align:center;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #fff;
+}
+
+/* .before_hasrole
+{
+	width:5%;
+	border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid transparent;
+} */
+.hasrole
+{
+    width:40%;
+    margin:auto;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-right: 9px solid #fff;
+    border-left: 9px solid transparent;
+    float:left;
+}
+
+.button_status_info
+{
+    width:90%;
+    /* padding:1px; */
+    /* border-radius:5px; */
+    margin:auto;
+    text-align:center;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #fff;
+}
+#profile_status
+{
+    width:60%;
+    padding-top:0px;
+    margin:auto;
+    text-align:center;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #fff;
+}
+.panel
+{
+    color:black;
+}
+.line_head
+{
+    border:1px solid #d8d2d2;
+}
+
+@media {
+    [class*="col-"] {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+}

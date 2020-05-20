@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!-- Logo -->
+<a href="" class="logo" style="line-height: 23px;padding:2px 5px;font-size:18px">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><b>LG</b>SP</span>
+    <!-- logo for regular state and mobile devices -->
+   <!--  <span class="logo-lg"><b>Nền tảng Tích hợp và Chia sẻ dữ liệu VNPT - LGSP</b></span> -->
+   <div class="row">
+   <div class="col-sm-2">
+    <img src="/icons/iconquochuy.png" style="width:150%;height:150%;padding:25%" />
+   </div>
+    <div class="col-sm-10">
+      <lable style="">Nền tảng Tích hợp và Chia sẻ dữ liệu VNPT - LGSP</lable>
+   </div>
+   </div>
+
+</a>
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+    </a>
+
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <img src="/dist/img/avatar.png" class="img-circle" alt="User Image" style="border-radius:180px;width:20px;height:20px"/>
+                  <span sec:authentication="principal.username">User</span>&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down"></i>
+                  
+                </a>
+                <ul class="dropdown-menu" style="width:100%">
+                    <!-- User image -->
+                    <li class="user-header" style="display:none">
+                       <span sec:authentication="principal.username" id="usernamelogin">User</span>
+                        <span sec:authentication="principal.authorities" id="ROLE">[ROLE_USER, ROLE_ADMIN]</span>
+                      
+                    </li>
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-right">
+                     
+					<a th:href="@{/logout}" class="btn btn-default btn-flat" style="border:1px solid black;background-color:#e6eaed"><i class="fa fa-power-off">&nbsp;&nbsp;&nbsp;</i>Đăng xuất</a>
+                      
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+        </ul>
+    </div>
+   <!--  <th:block th:replace ="fragments/header_func"></th:block> -->
+</nav>

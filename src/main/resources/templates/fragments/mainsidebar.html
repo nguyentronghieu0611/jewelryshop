@@ -1,0 +1,222 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+	<section class="sidebar" id="main1" style="display:">
+		<!-- sidebar menu: : style can be found in sidebar.less -->
+		<ul class="sidebar-menu">
+			<li><a href="/dashboard/index" id="dasboard-line"><i
+					class="fa fa-line-chart"></i>&nbsp;&nbsp;Dashboard</a></li>
+			<li class="treeview" id="kn_bgcolor"><a href="#"
+				class="has-focus"> <i class="fa fa-history"></i> <span>Lịch
+						sử kết nối </span> <i class="fa fa-angle-left pull-right" id="fa-left-kn"></i>
+					<i class="fa fa-angle-down" id="fa-down-kn"></i>
+			</a>
+				<ul class="treeview-menu" id="kn">
+					<li><a href="/tuphaplogreq" id="kn_tuphap"><i
+							class="fa fa-circle-o"></i>Kết nối Tư pháp</a></li>
+					<li><a href="/bhxhlogreq" id="kn_bhxh"><i
+							class="fa fa-circle-o"></i>Kết nối BHXH</a></li>
+					<li><a href="/khdtlogreq" id="kn_khdt"><i
+							class="fa fa-circle-o"></i>Kết nối KHDT</a></li>
+					<li><a href="/vnpostlogreq" id="kn_vnpost"><i
+							class="fa fa-circle-o"></i>Kết nối Vnpost</a></li>
+					<li><a href="/datasharelogreq" id="kn_datashare"><i
+							class="fa fa-circle-o"></i>Kết nối dữ liệu dùng chung</a></li>
+					<li><a href="/bcqglogreq" id="kn_bcqg"><i
+							class="fa fa-circle-o"></i>Kết nối báo cáo quốc gia</a></li>
+					<li><a href="/dvclogreq" id="kn_dvc"><i
+							class="fa fa-circle-o"></i> Cổng dịch vụ công quốc gia</a></li>
+				</ul></li>
+			<div></div>
+			<li class="treeview" id="lt_information"><a href="#"
+				class="has-focus"> <i class="fa fa-exchange"></i><span>Thông
+						tin liên thông</span> <i class="fa fa-angle-left pull-right"
+					id="fa-left-lt-information"></i> <i class="fa fa-angle-down"
+					id="fa-down-lt-information"></i>
+			</a>
+				<ul class="treeview-menu" id="lt_infomation_ul">
+					<li><a href="/guilienthong" id="gui_lienthong"><i
+							class="fa fa-circle-o"></i>Gửi liên thông</a></li>
+					<li><a href="/nhanlienthong" id="nhan_lienthong"><i
+							class="fa fa-circle-o"></i>Nhận liên thông</a></li>
+					<li><a href="/chuyendoidulieu" id="chuyendoidulieu"><i
+							class="fa fa-circle-o"></i>Chuyển đổi dữ liệu</a></li>
+				</ul></li>
+			<li class="treeview" id="pf_dvcprofile"><a href="#"
+				class="has-focus"> <i class="fa fa-folder"></i><span>LT
+						Hồ sơ Dịch vụ công</span> <i class="fa fa-angle-left pull-right"
+					id="fa-left-pf"></i> <i class="fa fa-angle-down" id="fa-down-pf"></i>
+			</a>
+				<ul class="treeview-menu" id="pf">
+					<li><a href="/guiprofile" id="pf_guiprofile"><i
+							class="fa fa-circle-o"></i>Hồ sơ cần gửi</a></li>
+					<li><a href="/nhanprofile" id="pf_nhanprofile"><i
+							class="fa fa-circle-o"></i>Hồ sơ cần nhận</a></li>
+				</ul></li>
+			<li class="treeview" id="news_treeview"><a href="#"
+				class="has-focus"> <i class="fa fa-folder"></i><span>LT
+						Tin tức</span> <i class="fa fa-angle-left pull-right" id="fa-left-new"></i>
+					<i class="fa fa-angle-down" id="fa-down-new"></i>
+			</a>
+				<ul class="treeview-menu" id="news">
+					<li><a href="/newsSend" id="news_send"><i
+							class="fa fa-circle-o"></i>Tin cần gửi</a></li>
+					<li><a href="/newsTake" id="news_take"><i
+							class="fa fa-circle-o"></i>Tin cần nhận</a></li>
+				</ul></li>
+			<li class="treeview" id="news_work_treeview"><a href="#"
+				class="has-focus"><i
+					class="glyphicon glyphicon glyphicon-calendar "></i><span>LT
+						Lịch làm việc</span> <i class="fa fa-angle-left pull-right"
+					id="fa-left-work"></i> <i class="fa fa-angle-down"
+					id="fa-down-work"></i> </a>
+				<ul class="treeview-menu" id="news_work">
+					<li><a href="/newsWorkSend" id="news_work_send"><i
+							class="fa fa-circle-o"></i>Lịch làm việc cần gửi</a></li>
+					<li><a href="/newsWorkTake" id="news_work_take"><i
+							class="fa fa-circle-o"></i>Lịch làm việc cần nhận</a></li>
+				</ul></li>
+
+			<li class="treeview" id="dm_bgcolor"><a href="#"
+				class="has-focus"><i class="fa fa-list-alt"></i> <span>Quản
+						lý danh mục</span> <i class="fa fa-angle-left pull-right" id="fa-left-dm"></i>
+					<i class="fa fa-angle-down" id="fa-down-dm"></i> </a>
+				<ul class="treeview-menu" id="dm">
+					<li><a href="/adminunits/index" id="dm_dvhc"><i
+							class="fa fa-circle-o"></i>Đơn vị hành chính</a></li>
+					<li id="cqhc_bgcolor"><a href="#" class="has-focus"> <i
+							class="fa fa-building"></i> <span>Cơ quan hành chính</span> <i
+							class="fa fa-angle-left pull-right" id="fa-left-cqhc"></i> <i
+							class="fa fa-angle-down" id="fa-down-cqhc"></i>
+					</a>
+						<ul class="treeview-menu" id="cqhc">
+							<li><a href="/adminagencies/index?type=province"
+								id="captinh"><i class="fa fa-circle-o"></i>Cấp tỉnh</a></li>
+							<li><a href="/adminagencies/index?type=district"
+								id="caphuyen"><i class="fa fa-circle-o"></i>Cấp huyện</a></li>
+							<li><a href="/adminagencies/index?type=ward" id="capxa"><i
+									class="fa fa-circle-o"></i>Cấp xã</a></li>
+						</ul></li>
+					<li><a href="/categories/index" id="dm_typedata"><i
+							class="fa fa-circle-o"></i>Loại dữ liệu dùng chung</a></li>
+					<li><a href="/posts/index" id="dm_kho_dulieu"><i
+							class="fa fa-circle-o"></i>Kho dữ liệu dùng chung</a></li>
+				</ul></li>
+
+			<li class="treeview" id="connected_bgcolor"><a href="#"
+				class="has-focus"><i class="fa fa-sitemap"></i><span>Tổ
+						chức liên thông </span> <i class="fa fa-angle-left pull-right"
+					id="fa-left-connected"></i> <i class="fa fa-angle-down"
+					id="fa-down-connected"></i>
+			</a>
+				<ul class="treeview-menu" id="connected">
+					<li><a href="/centers/index" id="center_connect"><i
+							class="fa fa-circle-o"></i>Trung tâm liên thông</a></li>
+					<li><a href="/units/index" id="unit_connect"><i
+							class="fa fa-circle-o"></i>Đơn vị liên thông</a></li>
+					<li><a href="/agencies/index" id="agency_connect"><i
+							class="fa fa-circle-o"></i>Đơn vị nội bộ</a></li>
+					<li><a href="/apis/index" id="api_list"><i
+							class="fa fa-circle-o"></i>Danh sách API</a></li>
+					<li><a href="/applications/index" id="application_list"><i
+							class="fa fa-circle-o"></i>Danh sách Ứng dụng</a></li>
+				</ul></li>
+			<li class="treeview" id="warning_bgcolor"><a href="#"
+				class="has-focus"><i class="fa fa-exclamation-triangle"></i><span>Cảnh
+						báo</span> <i class="fa fa-angle-left pull-right" id="fa-left-warning"></i>
+					<i class="fa fa-angle-down" id="fa-down-warning"></i> </a>
+				<ul class="treeview-menu" id="warning">
+					<li><a href="/notifylog" id="history_warning"><i
+							class="fa fa-circle-o"></i>Lịch sử cảnh báo</a></li>
+					<li><a href="/notifycontact" id="contact_list"><i
+							class="fa fa-circle-o"></i>Danh mục liên lạc</a></li>
+					<li><a href="/notifytemplate" id="form_warning"><i
+							class="fa fa-circle-o"></i>Mẫu cảnh báo</a></li>
+				</ul></li>
+			<li class="treeview" id="system_bgcolor"><a href="#"
+				class="has-focus"> <i class="fa fa-cogs"></i><span>Quản
+						trị hệ thống </span> <i class="fa fa-angle-left pull-right"
+					id="fa-left-system"></i> <i class="fa fa-angle-down"
+					id="fas-down-system"></i>
+			</a>
+				<ul class="treeview-menu" id="system_manage">
+					<li><a href="/users/index" id="manage_user"><i
+							class="fa fa-circle-o"></i>Quản lý users</a></li>
+				</ul></li>
+
+		</ul>
+		<style>
+.sidebar-menu li.treeview>.has-focus:focus {
+	background-color: #fff;
+	color: #1963aa;
+}
+
+.sidebar-menu .active>.has-focus:focus {
+	background-color: #fff;
+	color: #1963aa;
+}
+
+.fa.fa-angle-down {
+	position: absolute;
+	right: 8px;
+	top: 50%;
+	margin-top: -7px;
+	display: none;
+}
+
+#fas-down-four {
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	margin-top: -7px;
+	display: none;
+}
+
+#has-padding div#feedback-date {
+	border: 1px solid #CCC;
+	border-radius: 5px;
+}
+
+#has-padding div#feedback-date>input {
+	width: 95%;
+	border: none;
+}
+
+#has-padding {
+	padding: 3%;
+}
+</style>
+
+	</section>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+	<section id="main2" style="">
+		<ul class="sidebar-menu" id="menu-dasboard">
+			<li style="display: block"><a href="/dashboard/index"
+				id="dasboard-line"><i class="fa fa-line-chart"
+					style="font-size: 14px"></i>&nbsp;Dashboard</a></li>
+		</ul>
+		<ul class="sidebar-menu" id="menu_unit">
+		</ul>
+
+	</section>
+	<style>
+#has-padding div#feedback-date {
+	border: 1px solid #CCC;
+	border-radius: 5px;
+}
+
+#has-padding div#feedback-date>input {
+	width: 95%;
+	border: none;
+}
+
+#has-padding {
+	padding: 3%;
+}
+</style>
+	<th:block th:replace="fragments/mainsidebar_func"></th:block>
+</div>
+
+
+
+<!-- /.sidebar -->
