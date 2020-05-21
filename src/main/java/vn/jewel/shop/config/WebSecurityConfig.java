@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("USER")
                 .and().formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/")//
+                .defaultSuccessUrl("/admin/index")//
                 .failureUrl("/login?message=error")//
                 .permitAll().and()
                 .logout().invalidateHttpSession(true).clearAuthentication(true)

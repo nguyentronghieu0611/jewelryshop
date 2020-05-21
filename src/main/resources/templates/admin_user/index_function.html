@@ -1,0 +1,461 @@
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var paging = new Pagination();
+    $(document).ready(function () {
+        $("#modalCreate").on("show.bs.modal", function () {
+            configFormInput();
+            validateFormInput();
+        });
+
+        $("#modalCreate").on("shown.bs.modal", function () {
+            $('#modal_txt_name').focus();
+        });
+
+        $("#modalCreate").on("hidden.bs.modal", function () {
+            resetFormModal();
+        });
+        registerEvents();
+        loadListUnit();
+
+
+    });
+
+    function openAddModal() {
+        $("#modalCreate").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    function formatdate(year, month, day, hours, minutes, seconds) {
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        if (hours.length < 2)
+            hours = '0' + hours;
+        if (minutes.length < 2)
+            minutes = '0' + minutes;
+        if (seconds.length < 2)
+            seconds = '0' + seconds;
+        return [year, month, day].join('-') + " "
+            + [hours, minutes, seconds].join(':')
+    }
+
+    var loadListUnit = function () {
+        paging.reset();
+        loadListPagingUnit();
+    };
+
+    function loadListPagingUnit() {
+        var page = paging.currentPage() || 1;
+        var limit = paging.limit() || 10;
+        getRequest({
+            url: "/agencies/listparent?page=" + page + "&limit=" + limit,
+            success: function (data) {
+                cbLoadListPagingCatecory(data);
+            },
+            error: function (e) {
+
+            }
+        });
+    }
+
+    function search() {
+        var name = $('#txt_name').val();
+        var unit_code = $('#txt_code').val();
+
+        var page = paging.currentPage() || 1;
+        var limit = paging.limit() || 10;
+
+        getRequest({
+            url: "/agencies/search?page=" + page + "&limit=" + limit + "&name=" + name + "&code=" + unit_code,
+            success: function (data) {
+                cbLoadListPagingCatecory(data);
+            },
+            error: function (e) {
+
+            }
+        });
+
+    }
+
+    function cbLoadListPagingCatecory(data) {
+        console.log(data);
+        paging.init('paging', loadListPagingUnit, data);
+        var list = data['content'] || [];
+        if (list.length == 0) {
+            $('#tbody_data')
+                .html(
+                    '<td colspan="100%" style="text-align: center">Không có dữ liệu</td>');
+            return;
+        }
+        var html = '';
+        var size = paging.size() || 10;
+        var number = paging.currentPage() || 1;
+        var cls;
+        number -= 1;
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+
+            var date = new Date(item['created_at']), month = ''
+                + (date.getMonth() + 1), day = '' + date.getDate(), year = date
+                .getFullYear(), hours = '' + date.getHours(), minutes = ''
+                + date.getMinutes(), seconds = '' + date.getSeconds();
+
+            var created_at = formatdate(year, month, day, hours, minutes,
+                seconds);
+
+            if (item['updated_at']) {
+                var date_update = new Date(item['updated_at']), month_update = ''
+                    + (date_update.getMonth() + 1), day_update = '' + date_update.getDate(), year_update = date_update
+                    .getFullYear(), hours_update = '' + date_update.getHours(), minutes_update = ''
+                    + date_update.getMinutes(), seconds_update = '' + date_update.getSeconds();
+                var updated_at = formatdate(year_update, month_update, day_update, hours_update, minutes_update,
+                    seconds_update);
+
+            } else {
+                var updated_at = '';
+            }
+            html += '<tr class="treegrid-'+item['id']+'" id="treeitem-'+item['id']+'">'
+                +'<td class="btn-view-child" col-name data-id="'+item['id']+'">'+item['id']+ '</td>'
+                + '<td>'
+                + item['code']
+                + '</td><td>'
+                + item['name']
+                + '</td>'
+                + '<td style="text-align: center">' + item['account_id'] + '</td>'
+                + '<td style="text-align: center">' + item['email'] + '</td>'
+                + '<td>' + created_at + '</td>'
+                + '<td>' + updated_at + '</td>'
+                + '<td>'
+                + '<a title="Sửa" class="btn-edit" data-id="' + item['id'] + '" style="margin-left: 5px;"><i class="fa fa-edit fa-action" aria-hidden="true"></i></a>'
+                + '<a title="Xóa" class="btn-delete" data-id="' + item['id'] + '" unit-type="province" style="margin-left: 5px;"><i class="fa fa-trash fa-action" aria-hidden="true"></i></a></td>'
+                + '</tr>';
+        }
+        $('#tbody_data').html(html);
+        $('.tree-unit').treegrid({
+            initialState: 'collapsed'
+        });
+
+    }
+
+    function tb() {
+        alert("ok");
+    }
+
+
+    function save(flag) {
+        var validated = $("#form-info").valid();
+        if (!validated) {
+            return;
+        }
+
+        var fullDate = new Date();
+        var name = $('#name').val().trim();
+        var account_id = $('#account_id').val().trim();
+        var email = $('#email').val().trim();
+        var pid = $('#pid').val().trim();
+        var code = $('#code').val().trim();
+        var version = $('#version').val().trim();
+        var id = $('#modal_hidden_id').val().trim();
+        var data = {
+            name: name,
+            code: code,
+            account_id: account_id,
+            email: email,
+            pid: pid,
+            version: version,
+            updated_at: fullDate
+
+        };
+        if (id) {
+            data['id'] = id;
+        }
+        postRequest({
+            data: data,
+            url: "/agencies",
+            success: function (data) {
+                if (id || flag) {
+                    closeForm();
+                } else {
+                    $('#name').focus();
+                    $('#account_id').focus();
+                    $('#email').focus();
+                    $('#pid').focus();
+                    $('#version').focus();
+                    $('#code').focus();
+                    resetFormModal();
+                }
+                loadListUnit();
+                new Toast('success', 'Lưu thành công!');
+            },
+            error: function (e) {
+                new Toast('error', e['message']);
+            }
+        });
+    }
+
+    function closeForm() {
+        $('#modalCreate').modal('toggle');
+    }
+
+    function resetFormModal() {
+        $('#name').val('');
+        $('#account_id').val('');
+        $('#email').val('');
+        $('#pid').val('');
+        $('#version').val('');
+        $('#code').val('');
+        $('#modal_hidden_id').val('');
+    }
+
+    function validateFormInput() {
+        $('#form-info').validate({
+            ignore: [],
+            errorElement: 'small',
+            errorClass: 'data-invalid help-block',
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 6,
+                },
+                code: {
+                    required: true,
+                    maxlength: 20,
+                    minlength: 2,
+                    regex: '^[0-9a-zA-Z\.]+$',
+                },
+                email: {
+                    required: true,
+                    maxlength: 50,
+                    regex: '[^ ]+$',
+                    email: true
+                }
+            },
+            messages: {
+                name: {
+                    required: 'Tên đơn vị không được để trống',
+                    maxlength: 'Tên đơn vị không được vượt quá 15 ký tự',
+                    minlength: 'Tên đơn vị không được dưới 6 ký tự',
+                },
+                code: {
+                    required: 'Mã đơn vị không được để trống',
+                    maxlength: 'Mã đơn vị không được vượt quá 20 ký tự',
+                    minlength: 'Mã đơn vị  không được dưới 2 ký tự',
+                    regex: 'Mã đơn vị chỉ chứa chữ cái, chữ số và dấu chấm'
+                },
+                email: {
+                    required: 'Email không được để trống',
+                    maxlength: 'Email không được vượt quá 50 ký tự',
+                    regex: 'Email không chứa dấu cách',
+                    email: 'Email không đúng định dạng'
+                }
+            }
+        }).resetForm();
+    }
+
+    function registerEvents() {
+        $('#tblAgency').on('click', '.btn-edit', viewEditUnit);
+        $('#tblAgency').on('click', '.btn-delete', deleteUnit);
+        $(".search-control").keyup(function (event) {
+            if (event.keyCode === 13) {
+                search();
+            }
+        });
+        $('#tblAgency').on('click','.btn-view-child', viewChild);
+
+    };
+
+    function deleteUnit() {
+        var id = $(this).attr('data-id') || 0;
+        if (id == 0) {
+            return;
+        }
+        dialogConfirm({
+            callback: function () {
+                deleteRequest({
+                    url: "/agencies/" + id,
+                    success: function (data) {
+                        loadListUnit();
+                        new Toast('success', 'Xóa thành công!');
+                    },
+                    error: function (e) {
+                        new Toast('error', e['message']);
+                    }
+                });
+            }
+        });
+    }
+
+    //show child node
+    function viewChild() {
+        var id = $(this).attr('data-id')||0;
+        if(id == 0){
+            return;
+        }
+        $currentRow = $('#treeitem-'+id);
+        $('.treegrid-parent-'+id).treegrid('remove');
+        if($currentRow.hasClass('highlight2')) {
+            $currentRow.removeClass('expanded');
+            $currentRow.removeClass('highlight2');
+            return;
+        }
+        getRequest({
+            url : '/agencies/listchild?id='+id,
+            success : function(data) {
+                cbLoadChild(id, data);
+            },
+            error : function(e) {
+                new Toast('error', e['message']);
+            }
+        });
+    }
+
+    function cbLoadChild(id,data){
+        var html = '';
+        data = data||[];
+        if(data.length == 0) {
+            new Toast('success', 'Không có dữ liệu con!');
+            return;
+        }
+        for (var i = 0; i < data.length; i++) {
+            html += renderRowChild(data[i],id);
+        }
+        $('#treeitem-'+id).after(html);
+        $('#treeitem-'+id).addClass('expanded');
+        $('#treeitem-'+id).addClass('highlight2');
+        $('.tree-unit').treegrid();
+    }
+
+
+    function renderRowChild(item,id) {
+        var date = new Date(item['created_at']), month = ''
+            + (date.getMonth() + 1), day = '' + date.getDate(), year = date
+            .getFullYear(), hours = '' + date.getHours(), minutes = ''
+            + date.getMinutes(), seconds = '' + date.getSeconds();
+
+        var created_at = formatdate(year, month, day, hours, minutes,
+            seconds);
+
+        if (item['updated_at']) {
+            var date_update = new Date(item['updated_at']), month_update = ''
+                + (date_update.getMonth() + 1), day_update = '' + date_update.getDate(), year_update = date_update
+                .getFullYear(), hours_update = '' + date_update.getHours(), minutes_update = ''
+                + date_update.getMinutes(), seconds_update = '' + date_update.getSeconds();
+            var updated_at = formatdate(year_update, month_update, day_update, hours_update, minutes_update,
+                seconds_update);
+
+        } else {
+            var updated_at = '';
+        }
+
+        return '<tr class="treegrid-'+item['id']+' treegrid-parent-'+id+'" id="treeitem-'+item['id']+'">'
+            +'<td class="btn-view-child" col-name data-id="'+item['id']+'">'+item['id']+'</td>'
+            + '<td>'
+            + item['code']
+            + '</td><td>'
+            + item['name']
+            + '</td>'
+            + '<td style="text-align: center">' + item['account_id'] + '</td>'
+            + '<td style="text-align: center">' + item['email'] + '</td>'
+            + '<td>' + created_at + '</td>'
+            + '<td>' + updated_at + '</td>'
+            + '<td>'
+            + '<a title="Sửa" class="btn-edit" data-id="' + item['id'] + '" style="margin-left: 5px;"><i class="fa fa-edit fa-action" aria-hidden="true"></i></a>'
+            + '<a title="Xóa" class="btn-delete" data-id="' + item['id'] + '" unit-type="province" style="margin-left: 5px;"><i class="fa fa-trash fa-action" aria-hidden="true"></i></a></td>'
+            + '</tr>';
+    }
+
+    function viewEditUnit() {
+        var id = $(this).attr('data-id') || 0;
+        if (id == 0) {
+            return;
+        }
+        getRequest({
+            url: "/agencies/" + id,
+            success: function (data) {
+                cbViewEditUnit(data);
+            },
+            error: function (e) {
+                new Toast('error', e['message']);
+            }
+        });
+    }
+
+    function cbViewEditUnit(data) {
+        $('#modal_hidden_id').val(data['id']);
+        $('#name').val(data['name']);
+        $('#account_id').val(data['account_id']);
+        $('#email').val(data['email']);
+        $('#pid').val(data['pid']);
+        $('#version').val(data['version']);
+        $('#code').val(data['code']);
+        openAddModal();
+    }
+
+    function update() {
+        var fullDate = new Date();
+
+        var code = $('#code').val().trim();
+        var name = $('#name').val().trim();
+        var account_id = $('#account_id').val().trim();
+        var email = $('#email').val().trim();
+        var pid = $('#pid').val().trim();
+        var version = $('#version').val().trim();
+        var id = $('#modal_hidden_id').val().trim();
+
+        var data = {
+            name: name,
+            account_id: account_id,
+            email: email,
+            pid: pid,
+            version: version,
+            code: code,
+            updated_at: fullDate
+        };
+        if (id) {
+            data['id'] = id;
+        }
+        postRequest({
+            data: data,
+            url: "/agencies",
+            success: function (data) {
+                $('#name').focus();
+                $('#account_id').focus();
+                $('#email').focus();
+                $('#pid').focus();
+                $('#version').focus();
+                $('#code').focus();
+                new Toast('success', 'Lưu thành công!');
+            },
+            error: function (e) {
+                new Toast('error', e['message']);
+            }
+        });
+    }
+
+    /*  function viewUnit() {
+         var id = $(this).attr('data-id')||0;
+         if(id == 0){
+             return;
+         }
+         window.location = "/datafields/index?cateid="+id;
+     } */
+
+    function configFormInput() {
+        var id = $('#modal_hidden_id').val().trim();
+        if (id) {
+            $('#btn_save_close').hide();
+            $('#code').attr('readonly', true);
+            $('.modal-title').html('Sửa thông tin đơn vị nội bộ');
+        } else {
+            $('#btn_save_close').show();
+            $('.modal-title').html('Thêm mới đơn vị nội bộ');
+            $('#code').attr('readonly', false);
+        }
+    }
+
+    /*]]>*/
+</script>

@@ -10,7 +10,7 @@
 <body>
 <section layout:fragment="header">
 		<span><a href="/admin/index" class="panel"><i
-                class="fa fa-home"></i> Home -> </a> <lable id="">Dashboard</lable></span>
+                class="fa fa-home"></i> Home -> </a> <lable id="">Quản lý sản phẩm</lable></span>
     <hr class="line_head"/>
 
 </section>
@@ -18,12 +18,12 @@
     <div class="box-header with-border">
         <div class="row" style="margin-bottom: 3%">
             <div class="form-inline col-md-4">
-                <label class="control-label">Mã đơn vị:</label> <input
+                <label class="control-label">Mã sản phẩm:</label> <input
                     type="text" class="form-control search-control" id="txt_code"
                     name="txt_code" autocomplete="off"/>
             </div>
             <div class="form-inline col-md-4">
-                <label class="control-label">Tên đơn vị:</label> <input
+                <label class="control-label">Tên sản phẩm:</label> <input
                     type="text" class="form-control search-control" id="txt_name"
                     name="txt_name" autocomplete="off"/>
             </div>
@@ -35,7 +35,7 @@
                     </button>
                     <button id="btnNew" type="button" class="btn btn-success"
                             data-toggle="modal" data-target="#modalCreate" tabindex="8">
-                        <i class="fa fa-plus"></i> Thêm đơn vị nội bộ mới
+                        <i class="fa fa-plus"></i> Thêm sản phẩm mới
                     </button>
                 </div>
             </div>
@@ -56,10 +56,10 @@
                 <thead>
                 <tr>
                     <th style="width: 4%">#</th>
-                    <th style="width: 15%">Mã đơn vị</th>
-                    <th style="width: 20%">Tên đơn vị</th>
-                    <th style="width: 5%">Account ID</th>
-                    <th style="width: 15%">Email</th>
+                    <th style="width: 15%">Mã sản phẩm</th>
+                    <th style="width: 20%">Tên sản phẩm</th>
+                    <th style="width: 5%">Giá bán</th>
+                    <th style="width: 15%">Loại hàng</th>
                     <th style="width: 15%">Ngày tạo</th>
                     <th style="width: 15%">Ngày cập nhật</th>
                     <th style="width: 16%">Hành động</th>
@@ -177,7 +177,7 @@
             display: block;
         }
 
-        #dasboard-line {
+        #connect_product {
             color: #2b7dbc;
             background-color: #fff;
             border-right: 3px solid red
