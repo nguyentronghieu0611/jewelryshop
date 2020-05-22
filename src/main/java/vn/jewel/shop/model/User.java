@@ -5,12 +5,12 @@ import java.util.Date;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User extends AbstractModel<Long>{
     public User(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Column(name = "created_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date created_date;
@@ -26,11 +26,11 @@ public class User {
 
     private String username;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

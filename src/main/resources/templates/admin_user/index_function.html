@@ -51,7 +51,7 @@
         var page = paging.currentPage() || 1;
         var limit = paging.limit() || 10;
         getRequest({
-            url: "/agencies/listparent?page=" + page + "&limit=" + limit,
+            url: "/admin/getUser?page=" + page + "&limit=" + limit,
             success: function (data) {
                 cbLoadListPagingCatecory(data);
             },
@@ -63,13 +63,13 @@
 
     function search() {
         var name = $('#txt_name').val();
-        var unit_code = $('#txt_code').val();
+        var username = $('#txt_code').val();
 
         var page = paging.currentPage() || 1;
         var limit = paging.limit() || 10;
 
         getRequest({
-            url: "/agencies/search?page=" + page + "&limit=" + limit + "&name=" + name + "&code=" + unit_code,
+            url: "/admin/searchUser?page=" + page + "&limit=" + limit + "&name=" + name + "&code=" + username,
             success: function (data) {
                 cbLoadListPagingCatecory(data);
             },
@@ -98,7 +98,7 @@
         for (var i = 0; i < list.length; i++) {
             var item = list[i];
 
-            var date = new Date(item['created_at']), month = ''
+            var date = new Date(item['created_date']), month = ''
                 + (date.getMonth() + 1), day = '' + date.getDate(), year = date
                 .getFullYear(), hours = '' + date.getHours(), minutes = ''
                 + date.getMinutes(), seconds = '' + date.getSeconds();
@@ -106,8 +106,8 @@
             var created_at = formatdate(year, month, day, hours, minutes,
                 seconds);
 
-            if (item['updated_at']) {
-                var date_update = new Date(item['updated_at']), month_update = ''
+            if (item['updated_date']) {
+                var date_update = new Date(item['updated_date']), month_update = ''
                     + (date_update.getMonth() + 1), day_update = '' + date_update.getDate(), year_update = date_update
                     .getFullYear(), hours_update = '' + date_update.getHours(), minutes_update = ''
                     + date_update.getMinutes(), seconds_update = '' + date_update.getSeconds();
@@ -117,14 +117,14 @@
             } else {
                 var updated_at = '';
             }
-            html += '<tr class="treegrid-'+item['id']+'" id="treeitem-'+item['id']+'">'
-                +'<td class="btn-view-child" col-name data-id="'+item['id']+'">'+item['id']+ '</td>'
+            html += '<tr>'
+                +'<td col-name data-id="'+item['id']+'">'+(i +1+ (size*number))+ '</td>'
                 + '<td>'
-                + item['code']
+                + item['last_name']
                 + '</td><td>'
-                + item['name']
+                + item['first_name']
                 + '</td>'
-                + '<td style="text-align: center">' + item['account_id'] + '</td>'
+                + '<td style="text-align: center">' + item['username'] + '</td>'
                 + '<td style="text-align: center">' + item['email'] + '</td>'
                 + '<td>' + created_at + '</td>'
                 + '<td>' + updated_at + '</td>'
@@ -134,14 +134,6 @@
                 + '</tr>';
         }
         $('#tbody_data').html(html);
-        $('.tree-unit').treegrid({
-            initialState: 'collapsed'
-        });
-
-    }
-
-    function tb() {
-        alert("ok");
     }
 
 
@@ -152,21 +144,16 @@
         }
 
         var fullDate = new Date();
-        var name = $('#name').val().trim();
-        var account_id = $('#account_id').val().trim();
+        var first_name = $('#first_name').val().trim();
         var email = $('#email').val().trim();
-        var pid = $('#pid').val().trim();
-        var code = $('#code').val().trim();
-        var version = $('#version').val().trim();
+        var last_name = $('#last_name').val().trim();
+        var username = $('#username').val().trim();
         var id = $('#modal_hidden_id').val().trim();
         var data = {
-            name: name,
-            code: code,
-            account_id: account_id,
+            first_name: first_name,
+            last_name: last_name,
             email: email,
-            pid: pid,
-            version: version,
-            updated_at: fullDate
+            username: username
 
         };
         if (id) {
@@ -174,17 +161,15 @@
         }
         postRequest({
             data: data,
-            url: "/agencies",
+            url: "/admin/saveUser",
             success: function (data) {
                 if (id || flag) {
                     closeForm();
                 } else {
-                    $('#name').focus();
-                    $('#account_id').focus();
+                    $('#first_name').focus();
                     $('#email').focus();
-                    $('#pid').focus();
-                    $('#version').focus();
-                    $('#code').focus();
+                    $('#last_name').focus();
+                    $('#username').focus();
                     resetFormModal();
                 }
                 loadListUnit();
@@ -201,12 +186,10 @@
     }
 
     function resetFormModal() {
-        $('#name').val('');
-        $('#account_id').val('');
+        $('#first_name').val('');
         $('#email').val('');
-        $('#pid').val('');
-        $('#version').val('');
-        $('#code').val('');
+        $('#last_name').val('');
+        $('#username').val('');
         $('#modal_hidden_id').val('');
     }
 
@@ -216,35 +199,41 @@
             errorElement: 'small',
             errorClass: 'data-invalid help-block',
             rules: {
-                name: {
+                first_name: {
                     required: true,
                     maxlength: 50,
-                    minlength: 6,
                 },
-                code: {
+                last_name: {
                     required: true,
-                    maxlength: 20,
-                    minlength: 2,
-                    regex: '^[0-9a-zA-Z\.]+$',
+                    maxlength: 50,
                 },
                 email: {
                     required: true,
                     maxlength: 50,
                     regex: '[^ ]+$',
                     email: true
-                }
+                },
+                username: {
+                    required: true,
+                    maxlength: 50,
+                    regex: '[^ ]+$',
+                    minlength: 6
+                },
             },
             messages: {
-                name: {
-                    required: 'Tên đơn vị không được để trống',
-                    maxlength: 'Tên đơn vị không được vượt quá 15 ký tự',
-                    minlength: 'Tên đơn vị không được dưới 6 ký tự',
+                first_name: {
+                    required: 'Tên không được để trống',
+                    maxlength: 'Tên không được vượt quá 15 ký tự',
                 },
-                code: {
-                    required: 'Mã đơn vị không được để trống',
-                    maxlength: 'Mã đơn vị không được vượt quá 20 ký tự',
-                    minlength: 'Mã đơn vị  không được dưới 2 ký tự',
-                    regex: 'Mã đơn vị chỉ chứa chữ cái, chữ số và dấu chấm'
+                last_name: {
+                    required: 'Họ không được để trống',
+                    maxlength: 'Họ không được vượt quá 15 ký tự',
+                },
+                username: {
+                    required: 'Tên người dùng không được để trống',
+                    maxlength: 'Tên người dùng không được vượt quá 15 ký tự',
+                    regex: 'Tên người dùng không chứa dấu cách',
+                    minlength: 'Tên người dùng không được dưới 6 ký tự',
                 },
                 email: {
                     required: 'Email không được để trống',
@@ -257,14 +246,13 @@
     }
 
     function registerEvents() {
-        $('#tblAgency').on('click', '.btn-edit', viewEditUnit);
-        $('#tblAgency').on('click', '.btn-delete', deleteUnit);
+        $('#tblUser').on('click', '.btn-edit', viewEditUnit);
+        $('#tblUser').on('click', '.btn-delete', deleteUnit);
         $(".search-control").keyup(function (event) {
             if (event.keyCode === 13) {
                 search();
             }
         });
-        $('#tblAgency').on('click','.btn-view-child', viewChild);
 
     };
 
@@ -276,7 +264,7 @@
         dialogConfirm({
             callback: function () {
                 deleteRequest({
-                    url: "/agencies/" + id,
+                    url: "/admin/deleteUser/" + id,
                     success: function (data) {
                         loadListUnit();
                         new Toast('success', 'Xóa thành công!');
@@ -289,92 +277,13 @@
         });
     }
 
-    //show child node
-    function viewChild() {
-        var id = $(this).attr('data-id')||0;
-        if(id == 0){
-            return;
-        }
-        $currentRow = $('#treeitem-'+id);
-        $('.treegrid-parent-'+id).treegrid('remove');
-        if($currentRow.hasClass('highlight2')) {
-            $currentRow.removeClass('expanded');
-            $currentRow.removeClass('highlight2');
-            return;
-        }
-        getRequest({
-            url : '/agencies/listchild?id='+id,
-            success : function(data) {
-                cbLoadChild(id, data);
-            },
-            error : function(e) {
-                new Toast('error', e['message']);
-            }
-        });
-    }
-
-    function cbLoadChild(id,data){
-        var html = '';
-        data = data||[];
-        if(data.length == 0) {
-            new Toast('success', 'Không có dữ liệu con!');
-            return;
-        }
-        for (var i = 0; i < data.length; i++) {
-            html += renderRowChild(data[i],id);
-        }
-        $('#treeitem-'+id).after(html);
-        $('#treeitem-'+id).addClass('expanded');
-        $('#treeitem-'+id).addClass('highlight2');
-        $('.tree-unit').treegrid();
-    }
-
-
-    function renderRowChild(item,id) {
-        var date = new Date(item['created_at']), month = ''
-            + (date.getMonth() + 1), day = '' + date.getDate(), year = date
-            .getFullYear(), hours = '' + date.getHours(), minutes = ''
-            + date.getMinutes(), seconds = '' + date.getSeconds();
-
-        var created_at = formatdate(year, month, day, hours, minutes,
-            seconds);
-
-        if (item['updated_at']) {
-            var date_update = new Date(item['updated_at']), month_update = ''
-                + (date_update.getMonth() + 1), day_update = '' + date_update.getDate(), year_update = date_update
-                .getFullYear(), hours_update = '' + date_update.getHours(), minutes_update = ''
-                + date_update.getMinutes(), seconds_update = '' + date_update.getSeconds();
-            var updated_at = formatdate(year_update, month_update, day_update, hours_update, minutes_update,
-                seconds_update);
-
-        } else {
-            var updated_at = '';
-        }
-
-        return '<tr class="treegrid-'+item['id']+' treegrid-parent-'+id+'" id="treeitem-'+item['id']+'">'
-            +'<td class="btn-view-child" col-name data-id="'+item['id']+'">'+item['id']+'</td>'
-            + '<td>'
-            + item['code']
-            + '</td><td>'
-            + item['name']
-            + '</td>'
-            + '<td style="text-align: center">' + item['account_id'] + '</td>'
-            + '<td style="text-align: center">' + item['email'] + '</td>'
-            + '<td>' + created_at + '</td>'
-            + '<td>' + updated_at + '</td>'
-            + '<td>'
-            + '<a title="Sửa" class="btn-edit" data-id="' + item['id'] + '" style="margin-left: 5px;"><i class="fa fa-edit fa-action" aria-hidden="true"></i></a>'
-            + '<a title="Xóa" class="btn-delete" data-id="' + item['id'] + '" unit-type="province" style="margin-left: 5px;"><i class="fa fa-trash fa-action" aria-hidden="true"></i></a></td>'
-            + '</tr>';
-    }
-
     function viewEditUnit() {
         var id = $(this).attr('data-id') || 0;
         if (id == 0) {
             return;
         }
         getRequest({
-            url: "/agencies/" + id,
+            url: "/admin/getUser/" + id,
             success: function (data) {
                 cbViewEditUnit(data);
             },
@@ -386,48 +295,39 @@
 
     function cbViewEditUnit(data) {
         $('#modal_hidden_id').val(data['id']);
-        $('#name').val(data['name']);
-        $('#account_id').val(data['account_id']);
         $('#email').val(data['email']);
-        $('#pid').val(data['pid']);
-        $('#version').val(data['version']);
-        $('#code').val(data['code']);
+        $('#last_name').val(data['last_name']);
+        $('#first_name').val(data['first_name']);
+        $('#username').val(data['username']);
         openAddModal();
     }
 
     function update() {
         var fullDate = new Date();
 
-        var code = $('#code').val().trim();
-        var name = $('#name').val().trim();
-        var account_id = $('#account_id').val().trim();
         var email = $('#email').val().trim();
-        var pid = $('#pid').val().trim();
-        var version = $('#version').val().trim();
+        var last_name = $('#last_name').val().trim();
+        var first_name = $('#first_name').val().trim();
+        var username = $('#username').val().trim();
         var id = $('#modal_hidden_id').val().trim();
 
         var data = {
-            name: name,
-            account_id: account_id,
+            last_name: last_name,
             email: email,
-            pid: pid,
-            version: version,
-            code: code,
-            updated_at: fullDate
+            first_name: first_name,
+            username: username
         };
         if (id) {
             data['id'] = id;
         }
         postRequest({
             data: data,
-            url: "/agencies",
+            url: "/admin/saveUser",
             success: function (data) {
-                $('#name').focus();
-                $('#account_id').focus();
+                $('#first_name').focus();
+                $('#last_name').focus();
                 $('#email').focus();
-                $('#pid').focus();
-                $('#version').focus();
-                $('#code').focus();
+                $('#username').focus();
                 new Toast('success', 'Lưu thành công!');
             },
             error: function (e) {
@@ -449,10 +349,10 @@
         if (id) {
             $('#btn_save_close').hide();
             $('#code').attr('readonly', true);
-            $('.modal-title').html('Sửa thông tin đơn vị nội bộ');
+            $('.modal-title').html('Sửa thông tin người dùng');
         } else {
             $('#btn_save_close').show();
-            $('.modal-title').html('Thêm mới đơn vị nội bộ');
+            $('.modal-title').html('Thêm mới người dùng');
             $('#code').attr('readonly', false);
         }
     }
