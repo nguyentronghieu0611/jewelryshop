@@ -6,8 +6,13 @@
 <head>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="images/diamon.ico" />
-    <link rel="stylesheet" href="/dist/bootstrap-table.css" />
-    <script src="/dist/bootstrap-table.js"></script>
+    <!--<link rel="stylesheet" href="/dist/bootstrap-table.css" />-->
+    <!--<script src="/dist/bootstrap-table.js"></script>-->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
     <title>Diana’s jewelry</title>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
@@ -20,9 +25,9 @@
         <a href="/" id="logo" title="Quoc Hung’s jewelry">Quoc Hung’s jewelry</a>
         <div class="right-links">
             <ul>
-                <li th:unless="${#request.userPrincipal != null}"><a href="/login">Đăng nhập</a></li>
-                <li th:if="${#request.userPrincipal != null}"><a href="/logout"><span th:utext="${#request.getUserPrincipal().getName()}"></span></a></li>
-                <li th:if="${#request.userPrincipal != null}"><a href="/logout"><span></span>Đăng xuất</a></li>
+                <li th:unless="${#request.userPrincipal != null}"><a href="/login"><i class="fa fa-user"></i><span>Đăng nhập</span></a></li>
+                <li th:if="${#request.userPrincipal != null}"><a href="/admin/index"><i class="fa fa-user"></i><span th:utext="${#request.getUserPrincipal().getName()}"></span></a></li>
+                <li th:if="${#request.userPrincipal != null}"><a href="/logout"><i class="fa fa-sign-out"></i><span>Đăng xuất</span></a></li>
             </ul>
         </div>
     </div>
@@ -65,7 +70,7 @@
             </div>
             <div class="col contact">
                 <h3>Liên hệ</h3>
-                <p>Cửa hàng vàng bạc Quốc Hưng.<br>cụm 8 Thị Trấn Phúc Thọ<br>Hà Nội</p>
+                <p>Cửa hàng vàng bạc Quốc Hưng.<br>Cụm 8 Thị Trấn Phúc Thọ<br>Hà Nội</p>
                 <p><span class="ico ico-em"></span><a href="#">vangbacquochung@gmail.com</a></p>
                 <p><span class="ico ico-ph"></span>0979006509</p>
             </div>
@@ -88,5 +93,6 @@
 <script>window.jQuery || document.write("<script src='/js/jquery-1.11.1.min.js'>\x3C/script>")</script>
 <script src="/js/plugins.js"></script>
 <script src="/js/main.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -197,10 +197,15 @@ a:hover {
 
 #header .right-links span {
     float: left;
-    width: 20px;
+    /*width: 20px;*/
     height: 20px;
     margin: 5px 12px 0 0;
     /*background: url(../images/ico_header.png) no-repeat;*/
+}
+
+#header .right-links i {
+    padding-right: 5px;
+    margin-top: 13px;
 }
 
 #header .right-links span.ico-account {
@@ -1344,7 +1349,7 @@ h1 {
     }
 
     #header .right-links span {
-        background-image: url(../images/ico_header@2x.png);
+        /*background-image: url(../images/ico_header@2x.png);*/
         background-size: 60px 20px;
     }
 
