@@ -34,10 +34,11 @@
 				<input type="text" id="txtUserName" name="username"
 					placeholder="Tên đăng nhập" /> <input type="password"
 					id="txtPassword" name="password" placeholder="Tật khẩu" />
+				<div class="col-md-6"><input type="checkbox" name="remember-me" />&nbsp;&nbsp;Ghi nhớ
+					đăng nhập </div>
 				<button>Đăng nhập</button>
 				<p class="message">
-					Bạn chưa có tài khoản? <a href="#">Liên hệ Admin để được cung
-						cấp.</a>
+					Bạn chưa có tài khoản? <a href="/" th:href="@{/registration}">Đăng ký ngay</a>
 				</p>
 			</form>
 		</div>

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import vn.jewel.shop.model.User;
 import vn.jewel.shop.repository.UserRepository;
-import vn.jewel.shop.service.UserService;
+import vn.jewel.shop.service.UsersService;
+
+import java.security.Principal;
 
 @Controller
 public class AdminUserController {
@@ -15,7 +17,7 @@ public class AdminUserController {
     UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    UsersService userService;
 
     @RequestMapping(value = "/admin/user")
     public String index() {
@@ -42,5 +44,10 @@ public class AdminUserController {
     @RequestMapping(value = "/admin/saveUser", method = RequestMethod.POST)
     public ResponseEntity<Object> save(@RequestBody User user) {
         return new ResponseEntity<Object>(userService.save(user), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/admin/getUserName")
+    public ResponseEntity<String> getUserName(Principal principal){
+        return new ResponseEntity<String>(principal.getName(),HttpStatus.OK);
     }
 }

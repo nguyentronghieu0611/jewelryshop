@@ -1,24 +1,29 @@
 package vn.jewel.shop.config;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import vn.jewel.shop.common.Utils;
+import vn.jewel.shop.service.UserService;
+
+import javax.sql.DataSource;
 
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private UserService userService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -26,14 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        String contents = Utils.insideResourceToString("user.json");
-        JSONObject userOBJ = new JSONObject(contents);
-        // account kai/123456
-        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser(userOBJ.getString("username"))
-                .password(userOBJ.getString("password")).roles("USER");
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        String contents = Utils.insideResourceToString("user.json");
+//        JSONObject userOBJ = new JSONObject(contents);
+//        // account kai/123456
+//        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser(userOBJ.getString("username"))
+//                .password(userOBJ.getString("password")).roles("USER");
+//    }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -41,18 +48,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers("/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**", "/icons/**", "/dist/**",
 //                "/linechar/**", "/plugins/**", "/bootstrap/**","/apis/**","/cart**","/product**","/products**","/images/**","/**").permitAll();
 
-        //Các trang cần role user
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("USER");
+        //Các trang cần role admin
+        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
 
         //Xử lý truy cập trangg không đúng role
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         http.authorizeRequests().antMatchers("/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**", "/icons/**", "/dist/**",
                 "/linechar/**", "/plugins/**", "/bootstrap/**","/apis/**","/cart**","/product**","/products**","/images/**","/**").permitAll()
-                .antMatchers("/admin/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .and().formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/admin/index")//
+                .defaultSuccessUrl("/home")//
                 .failureUrl("/login?message=error")//
                 .permitAll().and()
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
@@ -65,8 +72,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
-        return memory;
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
     }
 
 }
