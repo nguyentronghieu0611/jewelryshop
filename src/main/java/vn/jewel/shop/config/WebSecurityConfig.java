@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
         // Cấu hình Remember Me.
         http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
+                .rememberMe().tokenRepository(this.persistentTokenRepository()).userDetailsService(userService) //
                 .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
     }
     @Bean

@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "product")
-public class Product {
+public class Product extends AbstractModel<Long>{
     public Product(){};
 
     @Id

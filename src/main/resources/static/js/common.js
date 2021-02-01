@@ -165,3 +165,9 @@ function bodauTiengViet(str){
     str= str.replace(/đ/g,"d");
     return str;
 }
+
+function getQueryParams(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get(param);
+    return myParam;
+}

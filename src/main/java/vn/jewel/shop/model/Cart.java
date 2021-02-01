@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "category")
+@Table(name = "cart")
 public class Cart {
     public Cart(){};
 

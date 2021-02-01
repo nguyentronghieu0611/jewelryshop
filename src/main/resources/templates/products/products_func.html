@@ -1,0 +1,59 @@
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var paging = new Pagination();
+    var id = [[${id}]];
+    $(document).ready(function () {
+        loadListProduct();
+    });
+
+    function loadListProduct() {
+        paging.reset();
+        loadListPagingProduct();
+    }
+
+    function loadListPagingProduct() {
+        paging.reset();
+        var page = paging.currentPage() || 1;
+        var limit = paging.limit() || 10;
+        getRequest({
+            url: "/products/getProducts?id="+id+"&page=" + page + "&limit=" + limit,
+            success: function (data) {
+                debugger;
+                console.log(data);
+                drawProduct(data);
+            },
+            error: function (e) {
+                new Toast("error","Thất bại");
+            }
+        });
+    }
+
+    function drawProduct(data) {
+        paging.init('paging', loadListPagingProduct, data);
+        var list = data['content'] || data;
+        if (list.length == 0) {
+            $('#tbody_data')
+                .html(
+                    '<td colspan="100%" style="text-align: center">Không có dữ liệu</td>');
+            return;
+        }
+        var html = '';
+        var size = paging.size() || 10;
+        var number = paging.currentPage() || 1;
+        var cls;
+        number -= 1;
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            html += `<article>
+                            <a href="/product?id=${item['id']}"><img src="images/11.jpg" alt=""></a>
+                            <h3><a href="/product?id=${item['id']}">${item['name']}</a></h3>
+                            <h4><a href="/product?id=${item['id']}">${item['price']}</a></h4>
+                            <a href="/product?id=${item['id']}" class="btn-add">Xem chi tiết</a>
+                        </article>`;
+        }
+        debugger;
+        $('#listProduct').html(html);
+    }
+
+    /*]]>*/
+</script>
