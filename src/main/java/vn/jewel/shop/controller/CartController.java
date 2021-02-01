@@ -19,8 +19,14 @@ import java.util.List;
 @Controller
 public class CartController {
     @RequestMapping(value = "/cart")
-    public String index() {
-        return "cart/cart";
+    public String index(HttpServletRequest request) {
+        if(request.getUserPrincipal()!=null){
+            return "cart/cart";
+        }
+        else {
+            return "login";
+        }
+//        return "cart/cart";
     }
 
     @PostMapping(value = "/addCart")
