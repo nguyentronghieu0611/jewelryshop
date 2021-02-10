@@ -77,7 +77,7 @@
         <div class="right-links">
             <ul>
                 <li th:unless="${#request.userPrincipal != null}"><a href="/login"><i class="fa fa-user"></i><span>Đăng nhập</span></a></li>
-                <li th:if="${#request.userPrincipal != null}"><a href="/admin/index"><i class="fa fa-user"></i><span th:utext="${#request.getUserPrincipal().getName()}"></span></a></li>
+                <li th:if="${#request.userPrincipal != null}"><a href="/admin/index"><i class="fa fa-user"></i><span th:utext="${#request.getUserPrincipal().getName()}" id="username"></span></a></li>
                 <li th:if="${#request.userPrincipal != null}"><a href="/logout"><i class="fa fa-sign-out"></i><span>Đăng xuất</span></a></li>
                 <li><a href="/cart"><i class="fa fa-shopping-cart"></i><span>Giỏ hàng</span></a></li>
             </ul>
@@ -98,6 +98,7 @@
             <li><a href="/products?id=5">Vòng cổ</a></li>
             <li><a href="/products?id=6">Vòng tay</a></li>
             <li><a href="/introduction">Giới thiệu</a></li>
+            <li><a href="/chat">Chat</a></li>
         </ul>
     </div>
     <!-- / container -->
