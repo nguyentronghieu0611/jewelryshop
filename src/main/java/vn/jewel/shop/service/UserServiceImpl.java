@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUserName(username);
     }
 
+    public User findUserActiveByUsername(String username){
+        return userRepository.getUserByUserActiveName(username);
+    }
+
     @Transactional
     @Override
     public User save(UserRegistrationDto registration){
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService {
     user.setEmail(registration.getEmail());
     user.setPassword(passwordEncoder.encode(registration.getPassword()));
     user.setRoles(Arrays.asList(new Role("ROLE_USER")));
-    user.setEnabled(1);
+    user.setEnabled(0);
     user.setUsername(registration.getUserName());
     return userRepository.save(user);
     }
@@ -68,9 +72,9 @@ public class UserServiceImpl implements UserService {
         if (user == null){
             throw new UsernameNotFoundException("Tên tài khoản hoặc mật khẩu không đúng.");
         }
-        if(user.getEnabled()==0)
-        {
-            throw new UsernameNotFoundException("Tài khoản chưa được kích hoạt");
+
+        if (user.getEnabled()!=1){
+            throw new UsernameNotFoundException("Tài khoản chưa được kích hoạt.");
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),

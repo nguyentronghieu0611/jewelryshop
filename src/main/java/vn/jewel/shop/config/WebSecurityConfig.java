@@ -8,13 +8,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import vn.jewel.shop.exception.CustomAuthenticationSuccessHandler;
 import vn.jewel.shop.service.UserService;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 
 
 @Configuration
@@ -24,6 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private UserService userService;
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationFailureHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -54,12 +68,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Xử lý truy cập trangg không đúng role
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
-        http.authorizeRequests().antMatchers("/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**", "/icons/**", "/dist/**",
+        http.authorizeRequests().antMatchers("/confirm-account**","/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**", "/icons/**", "/dist/**",
                 "/linechar/**", "/plugins/**", "/bootstrap/**","/apis/**","/cart**","/product**","/products**","/images/**","/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and().formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")//
+                .successHandler(authenticationFailureHandler())
                 .failureUrl("/login?message=error")//
                 .permitAll().and()
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
@@ -86,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 

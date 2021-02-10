@@ -49,6 +49,9 @@ public class IndexController {
             if (message.equals("error")) {
                 model.addAttribute("message", "Tài khoản hoặc mật khẩu không chính xác!");
             }
+            if (message.equals("error1")) {
+                model.addAttribute("message", "Tài khoản chưa được kích hoạt!");
+            }
         }
 
         return "login";
