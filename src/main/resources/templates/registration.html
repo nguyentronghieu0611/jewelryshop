@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" type="text/css"
 		  th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
-
+	<script type="text/javascript" src="js/api.js"></script>
 	<title>Registration</title>
 </head>
 <body>
@@ -36,6 +36,9 @@
 
 			<div th:if="${param.success}">
 				<div class="alert alert-info">Một email kích hoạt đã được gửi đến hòm thư của bạn, Vui lòng kiểm tra hòm thư!</div>
+			</div>
+			<div th:if="${param.error}">
+				<div class="alert alert-info">Vui lòng check captcha hợp lệ!</div>
 			</div>
 
 			<h1>Registration</h1>
@@ -104,11 +107,14 @@
 					   th:each="error : ${#fields.errors('confirmPassword')}"
 					   th:text="${error}">Validation error</p>
 				</div>
+				<div class="g-recaptcha"
+					 data-sitekey="6LeMFFMaAAAAAOiibRAcobmFnW_9N4BXrXA80k4P">
+				</div>
 				<div class="form-group"
 					 th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
 					<input id="terms" type="checkbox" th:field="*{terms}" />   <label
-						class="control-label" for="terms"> I agree with the <a
-						href="#">terms and conditions</a> for Registration.
+						class="control-label" for="terms"> Tôi đồng ý với <a
+						href="#">các điều khoản</a> để đăng ký.
 				</label>
 					<p class="error-message"
 					   th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation

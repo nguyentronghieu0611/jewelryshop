@@ -12,8 +12,10 @@ import vn.jewel.shop.model.User;
 import vn.jewel.shop.repository.ConfirmationTokenRepository;
 import vn.jewel.shop.repository.UserRepository;
 import vn.jewel.shop.service.EmailSenderService;
+import vn.jewel.shop.service.RecaptchaService;
 import vn.jewel.shop.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
 
@@ -34,6 +36,9 @@ public class UserRegistrationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RecaptchaService captchaService;
+
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
         return new UserRegistrationDto();
@@ -45,8 +50,16 @@ public class UserRegistrationController {
     }
 
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
-                                      BindingResult result){
+    public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto, @RequestParam(name="g-recaptcha-response") String recaptchaResponse,
+                                      BindingResult result, HttpServletRequest request){
+
+        String ip = request.getRemoteAddr();
+        String captchaVerifyMessage =
+                captchaService.verifyRecaptcha(ip, recaptchaResponse);
+
+        if ( !captchaVerifyMessage.isEmpty()) {
+            return "redirect:/registration?error";
+        }
 
         User existingMail = userService.findByEmail(userDto.getEmail());
         if (existingMail != null){
