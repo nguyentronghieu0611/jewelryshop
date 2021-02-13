@@ -22,23 +22,27 @@ public class WebSocketEventListener {
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        String username = (String) headerAccessor.getUser().getName();
-        logger.info("User Connected : " + username);
+        if(headerAccessor.getUser()!=null){
+            String username = (String) headerAccessor.getUser().getName();
+            logger.info("User Connected : " + username);
+        }
     }
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        if(headerAccessor.getUser()!=null){
+            String username = (String) headerAccessor.getUser().getName();
 
-        String username = (String) headerAccessor.getUser().getName();
-
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
-            messagingTemplate.convertAndSend("/topic/publicChatRoom", chatMessage);
+            if(username != null) {
+                logger.info("User Disconnected : " + username);
+                ChatMessage chatMessage = new ChatMessage();
+                chatMessage.setType(ChatMessage.MessageType.LEAVE);
+                chatMessage.setSender(username);
+                messagingTemplate.convertAndSend("/topic/publicChatRoom", chatMessage);
+            }
         }
+
     }
 
 

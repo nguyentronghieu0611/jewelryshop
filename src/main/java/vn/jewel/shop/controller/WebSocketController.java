@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.jewel.shop.model.ChatMessage;
+import vn.jewel.shop.model.NotifyModel;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,12 @@ public class WebSocketController {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
+    }
+
+    @MessageMapping("/notify.sendNotify")
+    @SendTo("/topic/publicNotify")
+    public NotifyModel sendNotify(@Payload NotifyModel notifyModel) {
+        return notifyModel;
     }
 
 }

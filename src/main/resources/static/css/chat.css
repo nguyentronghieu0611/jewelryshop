@@ -64,7 +64,7 @@ html, body {
     height: calc(100% - 60px);
     max-height: 600px;
     position: relative;
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 #chat-container ul {

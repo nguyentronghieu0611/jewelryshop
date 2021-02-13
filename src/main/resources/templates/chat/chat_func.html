@@ -63,9 +63,11 @@
         if(message.type === 'JOIN') {
             messageElement.classList.add('event-message');
             message.content = message.sender + ' đã tham gia!';
+            new Toast("success",message.sender + ' đã tham gia!');
         } else if (message.type === 'LEAVE') {
             messageElement.classList.add('event-message');
             message.content = message.sender + ' đã rời phòng chat!';
+            new Toast("success",message.sender + ' đã rời phòng chat!');
         } else {
             messageElement.classList.add('chat-message');
             var usernameElement = document.createElement('strong');

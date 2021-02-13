@@ -1,0 +1,20 @@
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function send() {
+        debugger;
+        var name = $('#txt_code').val();
+        var model = {content: name, sender: ""};
+        postRequest({
+            url: "/admin/sendNotify",
+            data: model,
+            success: function (data) {
+                debugger;
+            },
+            error: function (e) {
+                debugger;
+            }
+        });
+
+    }
+    /*]]>*/
+</script>
