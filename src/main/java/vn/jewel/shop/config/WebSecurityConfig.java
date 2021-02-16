@@ -13,10 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import vn.jewel.shop.exception.CustomAuthenticationFailureHandler;
 import vn.jewel.shop.exception.CustomAuthenticationSuccessHandler;
+import vn.jewel.shop.interceptor.CustomFilter;
 import vn.jewel.shop.service.UserService;
 
 import javax.servlet.ServletException;
@@ -35,9 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     @Bean
-    public AuthenticationSuccessHandler authenticationFailureHandler() {
-        return new CustomAuthenticationSuccessHandler();
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
+
+//    @Bean
+//    public AuthenticationFailureHandler authenticationFailureHandler() {
+//        return new CustomAuthenticationSuccessHandler();
+//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -53,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser(userOBJ.getString("username"))
 //                .password(userOBJ.getString("password")).roles("USER");
 //    }
+
 
 
 
@@ -74,8 +83,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")//
-                .successHandler(authenticationFailureHandler())
-                .failureUrl("/login?message=error")//
+//                .successHandler(authenticationFailureHandler())
+                .failureHandler(authenticationFailureHandler())
+//                .failureUrl("/login?message=error")//
                 .permitAll().and()
                 .logout().invalidateHttpSession(true).clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?message=logout")
@@ -97,6 +107,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
         auth.setPasswordEncoder(passwordEncoder());
+        //enable customize throw exception in failurehandle
+        auth.setHideUserNotFoundExceptions(false);
         return auth;
     }
 

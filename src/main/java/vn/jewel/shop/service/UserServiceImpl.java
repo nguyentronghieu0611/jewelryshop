@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vn.jewel.shop.dto.UserRegistrationDto;
+import vn.jewel.shop.exception.UserNotEnableException;
 import vn.jewel.shop.model.Role;
 import vn.jewel.shop.model.SessionHistory;
 import vn.jewel.shop.model.User;
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (user.getEnabled()!=1){
-            throw new UsernameNotFoundException("Tài khoản chưa được kích hoạt.");
+            throw new UserNotEnableException("Tài khoản chưa được kích hoạt.");
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
