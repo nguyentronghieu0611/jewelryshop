@@ -57,23 +57,23 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping("/403")
-    public String er() {
-        return "403";
-    }
+//    @GetMapping("/403")
+//    public String er() {
+//        return "403";
+//    }
+//
+//    @GetMapping("/error-403")
+//    public String error403() {
+//        return "errors/error-403";
+//    }
 
-    @GetMapping("/error-403")
-    public String error403() {
-        return "errors/error-403";
-    }
+//    @GetMapping("/error")
+//    public String error() {
+//        return "errors/error";
+//    }
 
-    @GetMapping("/error")
-    public String error() {
-        return "errors/error";
-    }
-
-    @GetMapping("/error-404")
-    public String error404() {
-        return "errors/error-404";
-    }
+//    @GetMapping("/error-404")
+//    public String error404() {
+//        return "errors/error-404";
+//    }
 }
