@@ -81,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/linechar/**", "/plugins/**", "/bootstrap/**","/apis/**","/cart**","/product**","/products**","/images/**","/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and().formLogin()
+//                .loginProcessingUrl("/j_spring_security_login")//
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")//
 //                .successHandler(authenticationFailureHandler())

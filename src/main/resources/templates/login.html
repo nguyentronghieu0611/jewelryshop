@@ -1,71 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<title>Đăng Nhập</title>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="/static/images/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <title>Đăng Nhập</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="/static/images/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
 
-<script src="js/main1.js"></script>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
-<script type="text/javascript" src="/js/api.js"></script>
-<link rel="stylesheet" href="/css/login.css" />
+    <script src="js/main1.js"></script>
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/api.js"></script>
+    <link rel="stylesheet" href="/css/login.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-	<div class="login-page">
-		<div class="form" style="margin-top: 10%; padding-top: 50px;">
-			<form class="register-form">
-				<input type="text" placeholder="Tên đăng nhập" /> <input
-					type="password" placeholder="Mật khẩu" /> <input type="text"
-					placeholder="Địa chỉ email" />
-				<button>create</button>
-				<p class="message">
-					Bạn đã có tài khoản? <a href="#">Đăng nhập</a>
-				</p>
-			</form>
-			<form class="login-form" th:action="@{/login}"
-				method='POST'>
-				<div style="padding-bottom: 30px; color: #4caf50;">
-					<h3>HỆ THỐNG QUẢN TRỊ CỬA HÀNG VÀNG BẠC QUỐC HƯNG</h3>
-				</div>
-				<h9 th:text="${message}" style="color: red;text-align: center"></h9>
-				<input type="text" id="txtUserName" name="username"
-					placeholder="Tên đăng nhập" /> <input type="password"
-					id="txtPassword" name="password" placeholder="Tật khẩu" />
-				<!--<div class="col-md-6"><input type="checkbox" name="remember-me" />&nbsp;&nbsp;Ghi nhớ-->
-					<!--đăng nhập </div>-->
-				<button>Đăng nhập</button>
-				<fb:login-button
-						scope="public_profile,email"
-						onlogin="checkLoginState();">
-				</fb:login-button>
-				<p class="message">
-					Bạn chưa có tài khoản? <a href="/" th:href="@{/registration}">Đăng ký ngay</a>
-				</p>
-			</form>
-		</div>
-	</div>
-</body>
-<script>
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId      : '4357900330890163',
-			cookie     : true,
-			xfbml      : true,
-			version    : 'v8.0'
-		});
-		FB.AppEvents.logPageView();
-	};
+<div class="login-page">
+    <div class="form" style="margin-top: 10%; padding-top: 50px;">
+        <form class="register-form">
+            <input type="text" placeholder="Tên đăng nhập"/> <input
+                type="password" placeholder="Mật khẩu"/> <input type="text"
+                                                                placeholder="Địa chỉ email"/>
+            <button>create</button>
+            <p class="message">
+                Bạn đã có tài khoản? <a href="#">Đăng nhập</a>
+            </p>
+        </form>
+        <form class="login-form" th:action="@{/login}"
+              method='POST'>
+            <div style="padding-bottom: 30px; color: #4caf50;">
+                <h3>HỆ THỐNG QUẢN TRỊ CỬA HÀNG VÀNG BẠC QUỐC HƯNG</h3>
+            </div>
+            <h9 th:text="${message}" style="color: red;text-align: center"></h9>
+            <input type="text" id="txtUserName" name="username"
+                   placeholder="Tên đăng nhập"/> <input type="password"
+                                                        id="txtPassword" name="password" placeholder="Mật khẩu"/>
+            <!--<div class="col-md-6"><input type="checkbox" name="remember-me" />&nbsp;&nbsp;Ghi nhớ-->
+            <!--đăng nhập </div>-->
+            <button>Đăng nhập</button>
+            <!--<a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8081/login-google&response_type=code&client_id=451184333766-0q5rfamcgv9rrvc8cg3hg0u3qdphob15.apps.googleusercontent.com&approval_prompt=force">Login With Gmail</a>-->
 
-	(function(d, s, id){
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement(s); js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-</script>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-outline-dark" href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8081/login-google&response_type=code&client_id=451184333766-0q5rfamcgv9rrvc8cg3hg0u3qdphob15.apps.googleusercontent.com&approval_prompt=force" role="button" style="text-transform:none;border: 1px solid;padding: 10px;box-shadow: 1px 1px #888888;margin: 15px 0 0 ;">
+                        <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                        Đăng nhập với Google
+                    </a>
+                </div>
+            </div>
+            <p class="message">
+                Bạn chưa có tài khoản? <a href="/" th:href="@{/registration}">Đăng ký ngay</a>
+            </p>
+        </form>
+    </div>
+</div>
+</body>
 </html>

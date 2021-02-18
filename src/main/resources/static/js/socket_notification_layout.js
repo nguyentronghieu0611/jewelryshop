@@ -24,12 +24,12 @@ function onConnected() {
 function onError(error) {
     // connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     // connectingElement.style.color = 'red';
-    alert('connect socket fail:'+error);
+    console.log('connect socket fail:'+error);
 }
 
 
 function onMessageReceived(payload) {
     debugger;
     var message = JSON.parse(payload.body);
-    new Toast("success",message.content);
+    new Toast("info",message.content);
 }
